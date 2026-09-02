@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>वार्ड 52 मतदाता सूची — उदयपुर नगर निगम</title>
+<style>
+  :root{
+    --paper:#F5EFE2;
+    --paper-dark:#EBE2CC;
+    --ink:#2B2118;
+    --ink-soft:#5A4E3F;
+    --navy:#1E3A5F;
+    --navy-deep:#132840;
+    --maroon:#8B2635;
+    --gold:#B8860B;
+    --line:#C9BC9C;
+    --white:#FFFDF8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      linear-gradient(var(--paper-dark) 1px, transparent 1px);
+    background-size: 100% 2.2em;
+    font-family: "Noto Sans Devanagari","Segoe UI",Arial,sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+  }
+  header{
+    background: var(--navy);
+    background-image: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: var(--white);
+    padding: 28px 24px 22px;
+    border-bottom: 6px solid var(--gold);
+    position: relative;
+  }
+  header::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:-6px; height:2px;
+    background: repeating-linear-gradient(90deg, var(--maroon) 0 12px, transparent 12px 24px);
+  }
+  .header-inner{
+    max-width: 1100px; margin: 0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:#C9D6E5; margin-bottom:4px; font-weight:600;
+  }
+  .title-block h1{
+    margin:0; font-size:26px; font-weight:700; font-family: Georgia, "Noto Serif Devanagari", serif;
+  }
+  .title-block .sub{
+    margin-top:4px; font-size:13px; color:#B9C6D6;
+  }
+  .seal{
+    width:64px; height:64px; border-radius:50%;
+    border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; text-align:center; line-height:1.2; color:var(--gold);
+    font-weight:700; flex-shrink:0;
+  }
+
+  main{ max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+  .tabs{
+    display:flex; gap:2px; margin-bottom:0; border-bottom:2px solid var(--ink);
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    background:var(--paper-dark); border:1px solid var(--line); border-bottom:none;
+    padding:10px 18px; font-size:14px; font-weight:600; color:var(--ink-soft);
+    cursor:pointer; border-radius:6px 6px 0 0; margin-bottom:-2px;
+  }
+  .tab-btn.active{
+    background:var(--white); color:var(--navy); border-color:var(--ink); border-bottom:2px solid var(--white);
+  }
+
+  .panel{
+    background: var(--white);
+    border: 1px solid var(--ink);
+    border-top:none;
+    padding: 22px;
+    display:none;
+    box-shadow: 3px 3px 0 rgba(43,33,24,0.08);
+  }
+  .panel.active{ display:block; }
+
+  h2.section-title{
+    font-family: Georgia, "Noto Serif Devanagari", serif;
+    font-size:19px; color:var(--navy); margin:0 0 14px;
+    border-left: 4px solid var(--maroon); padding-left:10px;
+  }
+
+  .search-row{ display:flex; gap:10px; margin-bottom:18px; flex-wrap:wrap; }
+  .search-row input[type=text]{
+    flex:1; min-width:220px; padding:11px 14px; font-size:15px;
+    border:1px solid var(--line); border-radius:4px; background:var(--paper);
+    color:var(--ink);
+  }
+  .search-row input[type=text]:focus{ outline:2px solid var(--navy); background:var(--white); }
+  .count-pill{
+    background:var(--navy); color:var(--white); padding:8px 14px; border-radius:20px;
+    font-size:13px; font-weight:600; align-self:center; white-space:nowrap;
+  }
+
+  table{ width:100%; border-collapse:collapse; font-size:14px; }
+  thead th{
+    text-align:left; background:var(--navy); color:var(--white);
+    padding:9px 10px; font-weight:600; font-size:12.5px; letter-spacing:0.02em;
+    position:sticky; top:0;
+  }
+  tbody tr{ border-bottom:1px solid var(--line); }
+  tbody tr:nth-child(even){ background: #FBF7EC; }
+  tbody tr:hover{ background:#F0E9D5; }
+  tbody td{ padding:9px 10px; vertical-align:top; color:var(--ink); }
+  .name-cell{ font-weight:700; color:var(--navy-deep); }
+  .highlight{ background: #FCE79A; padding:0 1px; border-radius:2px; }
+  .empty-state{
+    text-align:center; padding:40px 20px; color:var(--ink-soft);
+  }
+  .empty-state .big{ font-size:15px; font-weight:600; margin-bottom:6px; color:var(--navy); }
+
+  .actions-cell{ white-space:nowrap; }
+  .icon-btn{
+    border:1px solid var(--line); background:var(--white); border-radius:4px;
+    padding:5px 9px; cursor:pointer; font-size:12px; margin-right:4px; color:var(--ink-soft);
+  }
+  .icon-btn:hover{ border-color:var(--navy); color:var(--navy); }
+  .icon-btn.danger:hover{ border-color:var(--maroon); color:var(--maroon); }
+
+  .table-wrap{ max-height: 520px; overflow:auto; border:1px solid var(--line); border-radius:4px; }
+
+  form.voter-form{ display:grid; grid-template-columns:1fr 1fr; gap:14px 18px; }
+  form.voter-form .full{ grid-column: 1 / -1; }
+  form.voter-form label{
+    display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:5px;
+    text-transform:uppercase; letter-spacing:0.03em;
+  }
+  form.voter-form input, form.voter-form select{
+    width:100%; padding:10px 12px; font-size:14.5px; border:1px solid var(--line);
+    border-radius:4px; background:var(--paper); color:var(--ink);
+  }
+  form.voter-form input:focus, form.voter-form select:focus{ outline:2px solid var(--navy); background:var(--white); }
+  .form-actions{ grid-column:1/-1; display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
+
+  .btn{
+    padding:11px 20px; border-radius:5px; font-size:14px; font-weight:700; cursor:pointer;
+    border:1px solid transparent;
+  }
+  .btn-primary{ background:var(--maroon); color:var(--white); }
+  .btn-primary:hover{ background:#722030; }
+  .btn-secondary{ background:var(--white); color:var(--navy); border-color:var(--navy); }
+  .btn-secondary:hover{ background:#EEF3F8; }
+  .btn-ghost{ background:transparent; color:var(--ink-soft); border-color:var(--line); }
+
+  textarea{
+    width:100%; min-height:220px; padding:12px; font-family: monospace; font-size:13.5px;
+    border:1px solid var(--line); border-radius:4px; background:var(--paper); color:var(--ink);
+    resize:vertical;
+  }
+  .hint-box{
+    background:#EEF3F8; border:1px solid #C9D6E5; border-left:4px solid var(--navy);
+    padding:12px 14px; font-size:13px; color:var(--navy-deep); border-radius:4px; margin-bottom:14px;
+    line-height:1.6;
+  }
+  .hint-box code{ background:var(--white); padding:1px 5px; border-radius:3px; font-size:12.5px; }
+
+  .status-msg{ margin-top:12px; font-size:13.5px; font-weight:600; padding:10px 12px; border-radius:4px; display:none; }
+  .status-msg.show{ display:block; }
+  .status-ok{ background:#E4F3E4; color:#256029; border:1px solid #B7DCB7; }
+  .status-err{ background:#FBE5E5; color:#8B2635; border:1px solid #E9B8B8; }
+
+  footer{ max-width:1100px; margin:0 auto; padding:20px 24px 40px; font-size:12px; color:var(--ink-soft); text-align:center; }
+
+  @media (max-width:640px){
+    form.voter-form{ grid-template-columns:1fr; }
+    .header-inner{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;">
+  <div style="background:#FFFDF8; border:1px solid #2B2118; box-shadow:4px 4px 0 rgba(43,33,24,0.12); border-radius:6px; padding:36px 32px; max-width:380px; width:100%;">
+    <div style="text-align:center; margin-bottom:22px;">
+      <div style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#8B2635; font-weight:700; margin-bottom:6px;">उदयपुर नगर निगम</div>
+      <h1 style="margin:0; font-size:22px; font-family:Georgia,serif; color:#1E3A5F;">वार्ड 52 — लॉगिन करें</h1>
+    </div>
+    <form id="loginForm">
+      <div style="margin-bottom:14px;">
+        <label style="display:block; font-size:12.5px; font-weight:700; color:#5A4E3F; margin-bottom:5px; text-transform:uppercase;">ईमेल / ID</label>
+        <input type="email" id="loginEmail" required placeholder="जैसे: general@ward52.com" style="width:100%; padding:10px 12px; font-size:14.5px; border:1px solid #C9BC9C; border-radius:4px; background:#F5EFE2; box-sizing:border-box;">
+      </div>
+      <div style="margin-bottom:18px;">
+        <label style="display:block; font-size:12.5px; font-weight:700; color:#5A4E3F; margin-bottom:5px; text-transform:uppercase;">पासवर्ड</label>
+        <input type="password" id="loginPassword" required style="width:100%; padding:10px 12px; font-size:14.5px; border:1px solid #C9BC9C; border-radius:4px; background:#F5EFE2; box-sizing:border-box;">
+      </div>
+      <button type="submit" id="loginBtn" style="width:100%; padding:12px; border-radius:5px; font-size:14.5px; font-weight:700; cursor:pointer; background:#8B2635; color:#fff; border:none;">लॉगिन करें</button>
+    </form>
+    <div id="loginError" style="display:none; margin-top:14px; font-size:13px; font-weight:600; color:#8B2635; background:#FBE5E5; border:1px solid #E9B8B8; padding:10px 12px; border-radius:4px;"></div>
+  </div>
+</div>
+
+<div id="appContent" style="display:none;">
+
+<div id="connErrorBanner" style="display:none; background:#8B2635; color:#fff; text-align:center; padding:10px; font-size:13.5px; font-weight:600;">
+  ⚠️ शेयर्ड डेटाबेस से कनेक्ट नहीं हो पा रहा। इंटरनेट कनेक्शन जांचें, या Firebase कॉन्फ़िगरेशन गलत हो सकता है।
+</div>
+<header>
+  <div class="header-inner">
+    <div class="title-block">
+      <div class="eyebrow">उदयपुर नगर निगम</div>
+      <h1>वार्ड 52 — मतदाता सूची रजिस्टर</h1>
+      <div class="sub" id="roleLabel">Voter List Register · सभी सहयोगियों के लिए Live Shared डेटा</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="seal">वार्ड<br>52</div>
+      <button id="logoutBtn" class="btn btn-ghost" style="border-color:#B9C6D6; color:#fff; padding:8px 14px; font-size:12.5px;">लॉगआउट</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="list">सूची व खोज</button>
+    <button class="tab-btn" data-tab="add">नया मतदाता जोड़ें</button>
+    <button class="tab-btn" data-tab="import">बल्क इम्पोर्ट</button>
+    <button class="tab-btn" data-tab="scan">फोटो/PDF से अपलोड</button>
+    <button class="tab-btn" data-tab="stats">मतदान % / परिणाम</button>
+  </div>
+
+  <!-- LIST + SEARCH -->
+  <section class="panel active" id="panel-list">
+    <h2 class="section-title">मतदाता खोजें</h2>
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="नाम (first name) टाइप करें... जैसे: राम, सीता, सुनील" autocomplete="off">
+      <span class="count-pill" id="countPill">0 मतदाता</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>क्र.सं.</th>
+            <th>नाम</th>
+            <th>पिता/पति का नाम</th>
+            <th>उम्र</th>
+            <th>लिंग</th>
+            <th>EPIC नंबर</th>
+            <th>मोबाइल नंबर</th>
+            <th>पता / मकान नं.</th>
+            <th>भाग सं.</th>
+            <th>वोट</th>
+            <th>कार्रवाई</th>
+          </tr>
+        </thead>
+        <tbody id="voterTableBody"></tbody>
+      </table>
+    </div>
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <div class="big">अभी कोई मतदाता जोड़ा नहीं गया</div>
+      <div>"नया मतदाता जोड़ें" टैब से एक-एक करके जोड़ें, या "बल्क इम्पोर्ट" टैब से अपनी पूरी सूची एक साथ पेस्ट करें।</div>
+    </div>
+  </section>
+
+  <!-- ADD -->
+  <section class="panel" id="panel-add">
+    <h2 class="section-title">नया मतदाता जोड़ें / मौजूदा को एडिट करें</h2>
+    <form class="voter-form" id="voterForm">
+      <input type="hidden" id="editId">
+      <div>
+        <label for="f_name">नाम *</label>
+        <input type="text" id="f_name" required placeholder="जैसे: सुनील कुमार शर्मा">
+      </div>
+      <div>
+        <label for="f_relname">पिता/पति का नाम</label>
+        <input type="text" id="f_relname" placeholder="जैसे: रामलाल शर्मा">
+      </div>
+      <div>
+        <label for="f_age">उम्र</label>
+        <input type="number" id="f_age" min="18" max="120" placeholder="जैसे: 42">
+      </div>
+      <div>
+        <label for="f_gender">लिंग</label>
+        <select id="f_gender">
+          <option value="">चुनें</option>
+          <option value="पुरुष">पुरुष</option>
+          <option value="महिला">महिला</option>
+          <option value="अन्य">अन्य</option>
+        </select>
+      </div>
+      <div>
+        <label for="f_epic">EPIC / वोटर ID नंबर</label>
+        <input type="text" id="f_epic" placeholder="जैसे: RJ01234567">
+      </div>
+      <div>
+        <label for="f_mobile">मोबाइल नंबर</label>
+        <input type="tel" id="f_mobile" placeholder="जैसे: 9876543210" maxlength="15">
+      </div>
+      <div>
+        <label for="f_part">भाग संख्या (Part No.)</label>
+        <input type="text" id="f_part" placeholder="जैसे: 12">
+      </div>
+      <div class="full">
+        <label for="f_address">पता / मकान नंबर</label>
+        <input type="text" id="f_address" placeholder="जैसे: मकान नं. 45, गांधी नगर">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="submitBtn">मतदाता जोड़ें</button>
+        <button type="button" class="btn btn-ghost" id="cancelEditBtn" style="display:none;">एडिट रद्द करें</button>
+      </div>
+    </form>
+    <div class="status-msg" id="formStatus"></div>
+  </section>
+
+  <!-- BULK IMPORT -->
+  <section class="panel" id="panel-import">
+    <h2 class="section-title">एक साथ पूरी सूची जोड़ें (Bulk Import)</h2>
+    <div class="hint-box">
+      हर लाइन में एक मतदाता, कॉमा (,) से अलग करके इस क्रम में लिखें:<br>
+      <code>नाम, पिता/पति का नाम, उम्र, लिंग, EPIC नंबर, मोबाइल नंबर, भाग संख्या, पता</code><br>
+      उदाहरण: <code>सुनील कुमार शर्मा, रामलाल शर्मा, 42, पुरुष, RJ01234567, 9876543210, 12, मकान नं. 45 गांधी नगर</code><br>
+      अगर कोई जानकारी नहीं है तो उस जगह खाली छोड़ दें (कॉमा फिर भी लगाएं)। एक्सेल/शीट से कॉपी करके भी पेस्ट कर सकते हैं (टैब से अलग डेटा भी अपने आप पहचान लेगा)।
+    </div>
+    <textarea id="bulkInput" placeholder="यहां अपनी पूरी वोटर लिस्ट पेस्ट करें, एक लाइन में एक मतदाता..."></textarea>
+    <div class="form-actions" style="margin-top:14px;">
+      <button type="button" class="btn btn-primary" id="bulkImportBtn">सूची जोड़ें</button>
+      <button type="button" class="btn btn-secondary" id="exportBtn">पूरी सूची Export (JSON) करें</button>
+    </div>
+    <div class="status-msg" id="bulkStatus"></div>
+  </section>
+
+  <!-- SCAN UPLOAD (PDF/JPG OCR) -->
+  <section class="panel" id="panel-scan">
+    <h2 class="section-title">फोटो (JPG/PNG) या PDF से सीधे अपलोड करें</h2>
+    <div class="hint-box">
+      अपनी मौजूदा वोटर लिस्ट की फोटो (JPG/PNG) या स्कैन की गई PDF यहां अपलोड करें। सिस्टम अपने आप हर मतदाता का <b>EPIC नंबर</b> पहचानकर नाम, उम्र, लिंग, पिता/पति का नाम जैसी जानकारी निकालने की कोशिश करेगा।<br><br>
+      <b>ध्यान रखें:</b><br>
+      • यह प्रक्रिया आपके ब्राउज़र में ही होती है, इंटरनेट सिर्फ OCR इंजन (एक बार) डाउनलोड करने के लिए चाहिए।<br>
+      • 5,000–10,000 मतदाताओं की स्कैन फोटो/PDF प्रोसेस होने में <b>काफी समय</b> (कई मिनट से लेकर घंटा भर भी) लग सकता है — पेज बंद न करें, प्रोग्रेस नीचे दिखेगा।<br>
+      • स्कैन की क्वालिटी और फॉन्ट के अनुसार OCR में कुछ गलतियां या खाली जगह रह सकती है — जिस मतदाता की पूरी जानकारी नहीं मिलेगी, वो जगह खाली छोड़ दी जाएगी, आप बाद में "सूची व खोज" से एडिट कर सकते हैं।<br>
+      • जिन एंट्री का <b>EPIC नंबर</b> पहले से सूची में मौजूद है, वो अपने आप डुप्लीकेट मानकर छोड़ दी जाएंगी (जोड़ी नहीं जाएंगी)।<br>
+      • EPIC नंबर न मिलने पर उस एंट्री को अपने आप नहीं जोड़ा जा सकता (सिस्टम EPIC नंबर के आधार पर ही एक-एक मतदाता को अलग पहचानता है) — ऐसे रिकॉर्ड नीचे "छूटी हुई एंट्री" में गिनकर बताए जाएंगे, उन्हें मैनुअल जोड़ना होगा।
+    </div>
+    <input type="file" id="scanFiles" accept=".pdf,image/jpeg,image/jpg,image/png" multiple style="margin-bottom:14px;">
+    <div class="form-actions">
+      <button type="button" class="btn btn-primary" id="scanStartBtn">प्रोसेस शुरू करें</button>
+      <button type="button" class="btn btn-ghost" id="scanCancelBtn" style="display:none;">रोकें</button>
+    </div>
+    <div id="scanProgressWrap" style="display:none; margin-top:18px;">
+      <div style="background:var(--paper-dark); border-radius:6px; overflow:hidden; height:16px;">
+        <div id="scanProgressBar" style="background:var(--maroon); height:100%; width:0%; transition:width 0.2s;"></div>
+      </div>
+      <div id="scanProgressText" style="font-size:13px; margin-top:8px; color:var(--ink-soft);"></div>
+    </div>
+    <div id="scanLog" style="margin-top:14px; max-height:180px; overflow:auto; font-size:12.5px; font-family:monospace; color:var(--ink-soft); background:var(--paper); border:1px solid var(--line); border-radius:4px; padding:10px; display:none;"></div>
+    <div class="status-msg" id="scanStatus"></div>
+  </section>
+
+  <!-- VOTING STATS / RESULTS -->
+  <section class="panel" id="panel-stats">
+    <h2 class="section-title">मतदान प्रतिशत / परिणाम</h2>
+    <div id="statsContent" style="display:flex; flex-wrap:wrap; gap:30px; align-items:center; justify-content:center; padding:20px 0;">
+      <!-- filled by renderStats() -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  डेटा सभी सहयोगियों के बीच लाइव सिंक होता है (Firebase पर सुरक्षित)। महत्वपूर्ण डेटा का समय-समय पर "Export" लेकर बैकअप रखें।
+</footer>
+
+</div><!-- /appContent -->
+
+<script>
+// ====== FIREBASE CONFIG — Claude ise aapki config values se bharega ======
+const firebaseConfig = {
+  apiKey: "AIzaSyAXrrYgesgyJR5LbMGkmtsM2i4gjf-n9pk",
+  authDomain: "ward-52.firebaseapp.com",
+  projectId: "ward-52",
+  storageBucket: "ward-52.firebasestorage.app",
+  messagingSenderId: "125392692719",
+  appId: "1:125392692719:web:52dcef808c28dfafebc21a"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+const votersCollection = db.collection('ward52_voters');
+const ADMIN_EMAIL = "admin@ward52.com";
+let isAdmin = false;
+// ===========================================================================
+
+let voters = [];
+
+function uid(){ return 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); }
+
+// ============ AUTH: LOGIN / LOGOUT / ROLE ============
+auth.onAuthStateChanged(user => {
+  if(user){
+    isAdmin = (user.email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appContent').style.display = 'block';
+    applyRoleUI();
+    loadVoters();
+  }else{
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('appContent').style.display = 'none';
+  }
+});
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errBox = document.getElementById('loginError');
+  errBox.style.display = 'none';
+  document.getElementById('loginBtn').disabled = true;
+  document.getElementById('loginBtn').textContent = 'जांच रहे हैं...';
+  try{
+    await auth.signInWithEmailAndPassword(email, password);
+  }catch(err){
+    errBox.textContent = 'ईमेल या पासवर्ड गलत है। कृपया दोबारा कोशिश करें।';
+    errBox.style.display = 'block';
+  }finally{
+    document.getElementById('loginBtn').disabled = false;
+    document.getElementById('loginBtn').textContent = 'लॉगिन करें';
+  }
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  auth.signOut();
+});
+
+function applyRoleUI(){
+  const roleLabel = document.getElementById('roleLabel');
+  const addTab = document.querySelector('[data-tab="add"]');
+  const importTab = document.querySelector('[data-tab="import"]');
+  const scanTab = document.querySelector('[data-tab="scan"]');
+
+  if(isAdmin){
+    roleLabel.textContent = 'Voter List Register · Admin मोड — पूरा डेटा दिखेगा, जोड़/एडिट/हटा सकते हैं';
+    addTab.style.display = '';
+    importTab.style.display = '';
+    scanTab.style.display = '';
+    document.getElementById('searchInput').placeholder = 'नाम (first name) टाइप करें... जैसे: राम, सीता, सुनील';
+  }else{
+    roleLabel.textContent = 'Voter List Register · केवल खोज मोड';
+    addTab.style.display = 'none';
+    importTab.style.display = 'none';
+    scanTab.style.display = 'none';
+    document.getElementById('searchInput').placeholder = 'खोजने के लिए नाम टाइप करें...';
+  }
+  renderTable();
+}
+
+function loadVoters(){
+  votersCollection.onSnapshot(snapshot => {
+    voters = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderTable();
+    renderStats();
+  }, err => {
+    console.error('Firestore sync error', err);
+    showConnectionError();
+  });
+}
+
+async function upsertVoterDoc(record){
+  try{
+    await votersCollection.doc(record.id).set(record);
+    return true;
+  }catch(e){
+    console.error('Save error', e);
+    alert('डेटा सेव करने में समस्या हुई। इंटरनेट कनेक्शन जांचें।');
+    return false;
+  }
+}
+
+async function deleteVoterDoc(id){
+  try{
+    await votersCollection.doc(id).delete();
+    return true;
+  }catch(e){
+    console.error('Delete error', e);
+    alert('डेटा हटाने में समस्या हुई। इंटरनेट कनेक्शन जांचें।');
+    return false;
+  }
+}
+
+// Chunked batch writes for large bulk imports (Firestore limit: 500 ops/batch)
+async function batchUpsertVoters(records){
+  const chunkSize = 450;
+  for(let i = 0; i < records.length; i += chunkSize){
+    const chunk = records.slice(i, i + chunkSize);
+    const batch = db.batch();
+    chunk.forEach(rec => batch.set(votersCollection.doc(rec.id), rec));
+    await batch.commit();
+  }
+}
+
+function showConnectionError(){
+  const banner = document.getElementById('connErrorBanner');
+  if(banner) banner.style.display = 'block';
+}
+
+function escapeHtml(str){
+  return (str || '').toString()
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function highlightMatch(text, query){
+  const t = escapeHtml(text);
+  if(!query) return t;
+  const idx = t.toLowerCase().indexOf(query.toLowerCase());
+  if(idx === -1) return t;
+  return t.slice(0, idx) + '<span class="highlight">' + t.slice(idx, idx+query.length) + '</span>' + t.slice(idx+query.length);
+}
+
+function firstWord(str){
+  return (str || '').trim().split(/\s+/)[0] || '';
+}
+
+function renderTable(){
+  const query = document.getElementById('searchInput').value.trim();
+  const tbody = document.getElementById('voterTableBody');
+  const emptyState = document.getElementById('emptyState');
+  const countPill = document.getElementById('countPill');
+
+  // General (non-admin) users: never browse the full list. Show results only once they search.
+  if(!isAdmin){
+    if(!query){
+      tbody.innerHTML = '';
+      document.querySelector('.table-wrap').style.display = 'none';
+      emptyState.style.display = 'block';
+      emptyState.querySelector('.big').textContent = 'खोजने के लिए ऊपर नाम टाइप करें';
+      emptyState.querySelector('div:last-child').textContent = 'पूरी सूची यहां नहीं दिखाई जाती — सिर्फ जिस नाम से आप खोजेंगे, वही परिणाम दिखेंगे।';
+      countPill.textContent = 'खोजें';
+      return;
+    }
+    const q = query.toLowerCase();
+    const filtered = voters.filter(v => firstWord(v.name).toLowerCase().startsWith(q) || (v.name||'').toLowerCase().includes(q));
+    countPill.textContent = filtered.length + ' मिले';
+
+    if(filtered.length === 0){
+      document.querySelector('.table-wrap').style.display = 'block';
+      emptyState.style.display = 'none';
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:24px;color:var(--ink-soft);">इस नाम से कोई मतदाता नहीं मिला</td></tr>';
+      return;
+    }
+    document.querySelector('.table-wrap').style.display = 'block';
+    emptyState.style.display = 'none';
+    tbody.innerHTML = filtered.map((v, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td class="name-cell">${highlightMatch(v.name, query)}</td>
+        <td>${escapeHtml(v.relname)}</td>
+        <td>${escapeHtml(v.age)}</td>
+        <td>${escapeHtml(v.gender)}</td>
+        <td>${escapeHtml(v.epic)}</td>
+        <td>${escapeHtml(v.mobile)}</td>
+        <td>${escapeHtml(v.address)}</td>
+        <td>${escapeHtml(v.part)}</td>
+        <td>${v.voted ? '✅ हाँ' : '❌ नहीं'}</td>
+        <td class="actions-cell">
+          <button class="icon-btn" onclick="copyVoter('${v.id}')">कॉपी</button>
+        </td>
+      </tr>
+    `).join('');
+    return;
+  }
+
+  // Admin: full browse + search, with edit/delete
+  let filtered = voters;
+  if(query){
+    const q = query.toLowerCase();
+    filtered = voters.filter(v => firstWord(v.name).toLowerCase().startsWith(q) || (v.name||'').toLowerCase().includes(q));
+  }
+
+  countPill.textContent = filtered.length + ' मतदाता' + (query ? ' मिले' : '');
+
+  if(voters.length === 0){
+    tbody.innerHTML = '';
+    emptyState.style.display = 'block';
+    emptyState.querySelector('.big').textContent = 'अभी कोई मतदाता जोड़ा नहीं गया';
+    emptyState.querySelector('div:last-child').textContent = '"नया मतदाता जोड़ें" टैब से एक-एक करके जोड़ें, या "बल्क इम्पोर्ट" टैब से अपनी पूरी सूची एक साथ पेस्ट करें।';
+    document.querySelector('.table-wrap').style.display = 'none';
+    return;
+  }
+  document.querySelector('.table-wrap').style.display = 'block';
+  emptyState.style.display = 'none';
+
+  if(filtered.length === 0){
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;padding:24px;color:var(--ink-soft);">इस नाम से कोई मतदाता नहीं मिला</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((v, i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td class="name-cell">${highlightMatch(v.name, query)}</td>
+      <td>${escapeHtml(v.relname)}</td>
+      <td>${escapeHtml(v.age)}</td>
+      <td>${escapeHtml(v.gender)}</td>
+      <td>${escapeHtml(v.epic)}</td>
+      <td>${escapeHtml(v.mobile)}</td>
+      <td>${escapeHtml(v.address)}</td>
+      <td>${escapeHtml(v.part)}</td>
+      <td style="text-align:center;">
+        <input type="checkbox" ${v.voted ? 'checked' : ''} onchange="toggleVoted('${v.id}', this.checked)" style="width:18px; height:18px; cursor:pointer;">
+      </td>
+      <td class="actions-cell">
+        <button class="icon-btn" onclick="editVoter('${v.id}')">एडिट</button>
+        <button class="icon-btn danger" onclick="deleteVoter('${v.id}')">हटाएं</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+window.toggleVoted = async function(id, checked){
+  try{
+    await votersCollection.doc(id).update({ voted: !!checked });
+  }catch(e){
+    console.error('Vote status update error', e);
+    alert('वोट स्थिति अपडेट करने में समस्या हुई। इंटरनेट कनेक्शन जांचें।');
+  }
+};
+
+function renderStats(){
+  const container = document.getElementById('statsContent');
+  if(!container) return;
+
+  const total = voters.length;
+  const votedCount = voters.filter(v => v.voted).length;
+  const notVotedCount = total - votedCount;
+  const pct = total > 0 ? (votedCount / total) * 100 : 0;
+  const pctDisplay = pct.toFixed(1);
+
+  const radius = 80;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (pct / 100) * circumference;
+
+  container.innerHTML = `
+    <div style="text-align:center;">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="${radius}" fill="none" stroke="var(--paper-dark)" stroke-width="20"></circle>
+        <circle cx="100" cy="100" r="${radius}" fill="none" stroke="var(--maroon)" stroke-width="20"
+          stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+          stroke-linecap="round" transform="rotate(-90 100 100)"
+          style="transition: stroke-dashoffset 0.6s ease;"></circle>
+        <text x="100" y="94" text-anchor="middle" font-size="30" font-weight="700" fill="var(--navy-deep)">${pctDisplay}%</text>
+        <text x="100" y="118" text-anchor="middle" font-size="12" fill="var(--ink-soft)">मतदान हुआ</text>
+      </svg>
+    </div>
+    <div style="min-width:220px;">
+      <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line);">
+        <span style="color:var(--ink-soft); font-weight:600;">कुल मतदाता</span>
+        <span style="font-weight:700; color:var(--navy-deep); font-size:16px;">${total}</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line);">
+        <span style="color:var(--ink-soft); font-weight:600;">✅ वोट डाला</span>
+        <span style="font-weight:700; color:#256029; font-size:16px;">${votedCount}</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:10px 0;">
+        <span style="color:var(--ink-soft); font-weight:600;">❌ वोट नहीं डाला</span>
+        <span style="font-weight:700; color:var(--maroon); font-size:16px;">${notVotedCount}</span>
+      </div>
+    </div>
+  `;
+}
+
+window.copyVoter = function(id){
+  const v = voters.find(x => x.id === id);
+  if(!v) return;
+  const text = `नाम: ${v.name || ''}\nपिता/पति का नाम: ${v.relname || ''}\nउम्र: ${v.age || ''}\nलिंग: ${v.gender || ''}\nEPIC नंबर: ${v.epic || ''}\nमोबाइल नंबर: ${v.mobile || ''}\nपता: ${v.address || ''}\nभाग सं.: ${v.part || ''}`;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('डेटा कॉपी कर लिया गया है।');
+  }).catch(() => {
+    alert('कॉपी नहीं हो सका, कृपया मैन्युअल रूप से चुनकर कॉपी करें।');
+  });
+};
+
+function showStatus(elId, msg, ok){
+  const el = document.getElementById(elId);
+  el.textContent = msg;
+  el.className = 'status-msg show ' + (ok ? 'status-ok' : 'status-err');
+  setTimeout(()=>{ el.classList.remove('show'); }, 4000);
+}
+
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', renderTable);
+
+// Add / Edit form
+document.getElementById('voterForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('f_name').value.trim();
+  if(!name){ showStatus('formStatus', 'नाम आवश्यक है।', false); return; }
+
+  const editId = document.getElementById('editId').value;
+  const existingVoter = editId ? voters.find(v => v.id === editId) : null;
+  const record = {
+    id: editId || uid(),
+    name,
+    relname: document.getElementById('f_relname').value.trim(),
+    age: document.getElementById('f_age').value.trim(),
+    gender: document.getElementById('f_gender').value,
+    epic: document.getElementById('f_epic').value.trim(),
+    mobile: document.getElementById('f_mobile').value.trim(),
+    part: document.getElementById('f_part').value.trim(),
+    address: document.getElementById('f_address').value.trim(),
+    voted: existingVoter ? !!existingVoter.voted : false,
+  };
+
+  if(editId){
+    showStatus('formStatus', 'सेव हो रहा है...', true);
+    await upsertVoterDoc(record);
+    showStatus('formStatus', 'मतदाता की जानकारी अपडेट की गई।', true);
+  }else{
+    showStatus('formStatus', 'जोड़ा जा रहा है...', true);
+    await upsertVoterDoc(record);
+    showStatus('formStatus', 'मतदाता सूची में जोड़ा गया।', true);
+  }
+  resetForm();
+});
+
+document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+function resetForm(){
+  document.getElementById('voterForm').reset();
+  document.getElementById('editId').value = '';
+  document.getElementById('submitBtn').textContent = 'मतदाता जोड़ें';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+}
+
+window.editVoter = function(id){
+  const v = voters.find(x => x.id === id);
+  if(!v) return;
+  document.getElementById('editId').value = v.id;
+  document.getElementById('f_name').value = v.name || '';
+  document.getElementById('f_relname').value = v.relname || '';
+  document.getElementById('f_age').value = v.age || '';
+  document.getElementById('f_gender').value = v.gender || '';
+  document.getElementById('f_epic').value = v.epic || '';
+  document.getElementById('f_mobile').value = v.mobile || '';
+  document.getElementById('f_part').value = v.part || '';
+  document.getElementById('f_address').value = v.address || '';
+  document.getElementById('submitBtn').textContent = 'बदलाव सेव करें';
+  document.getElementById('cancelEditBtn').style.display = 'inline-block';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector('[data-tab="add"]').classList.add('active');
+  document.getElementById('panel-add').classList.add('active');
+};
+
+window.deleteVoter = async function(id){
+  if(!confirm('क्या आप वाकई इस मतदाता को सूची से हटाना चाहते हैं?')) return;
+  await deleteVoterDoc(id);
+};
+
+// Bulk import
+document.getElementById('bulkImportBtn').addEventListener('click', async () => {
+  const raw = document.getElementById('bulkInput').value;
+  const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  if(lines.length === 0){ showStatus('bulkStatus', 'कृपया पहले सूची पेस्ट करें।', false); return; }
+
+  let skipped = 0;
+  const newRecords = [];
+  lines.forEach(line => {
+    const sep = line.includes('\t') ? '\t' : ',';
+    const parts = line.split(sep).map(p => p.trim());
+    const [name, relname, age, gender, epic, mobile, part, ...addressParts] = parts;
+    const address = addressParts.join(sep === '\t' ? '\t' : ', ');
+    if(!name){ skipped++; return; }
+    newRecords.push({
+      id: uid(),
+      name,
+      relname: relname || '',
+      age: age || '',
+      gender: gender || '',
+      epic: epic || '',
+      mobile: mobile || '',
+      part: part || '',
+      address: address || '',
+      voted: false
+    });
+  });
+
+  showStatus('bulkStatus', newRecords.length + ' मतदाता सेव किए जा रहे हैं, कृपया प्रतीक्षा करें...', true);
+  await batchUpsertVoters(newRecords);
+  document.getElementById('bulkInput').value = '';
+  showStatus('bulkStatus', newRecords.length + ' मतदाता जोड़े गए' + (skipped ? ', ' + skipped + ' लाइनें छोड़ी गईं (नाम खाली था)' : '') + '।', true);
+});
+
+// Export
+document.getElementById('exportBtn').addEventListener('click', () => {
+  if(voters.length === 0){ showStatus('bulkStatus', 'सूची खाली है, एक्सपोर्ट करने के लिए कुछ नहीं है।', false); return; }
+  const blob = new Blob([JSON.stringify(voters, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ward52_voter_list_backup.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showStatus('bulkStatus', 'सूची डाउनलोड कर दी गई है।', true);
+});
+
+// ============ PHOTO/PDF SCAN → OCR → AUTO ADD ============
+let scanCancelled = false;
+
+function scanLog(msg){
+  const el = document.getElementById('scanLog');
+  el.style.display = 'block';
+  el.innerHTML += msg + '<br>';
+  el.scrollTop = el.scrollHeight;
+}
+
+function setScanProgress(pct, text){
+  document.getElementById('scanProgressWrap').style.display = 'block';
+  document.getElementById('scanProgressBar').style.width = pct + '%';
+  document.getElementById('scanProgressText').textContent = text;
+}
+
+// Convert a PDF file into an array of canvas images (one per page)
+async function pdfToImages(file){
+  const arrayBuffer = await file.arrayBuffer();
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const images = [];
+  for(let p = 1; p <= pdf.numPages; p++){
+    const page = await pdf.getPage(p);
+    const viewport = page.getViewport({ scale: 2.2 });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    images.push(canvas);
+  }
+  return images;
+}
+
+// EPIC-anchored parser: splits OCR text into per-voter blocks using EPIC number pattern
+function parseOcrTextToRecords(fullText){
+  const text = fullText.replace(/\r/g, '');
+  const epicRegex = /\b[A-Z]{2,3}[0-9]{6,8}\b/g;
+  const matches = [...text.matchAll(epicRegex)];
+  const records = [];
+
+  for(let i = 0; i < matches.length; i++){
+    const start = matches[i].index;
+    const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
+    const block = text.slice(start, end);
+    const epic = matches[i][0].toUpperCase();
+
+    const rec = { epic, name: '', relname: '', age: '', gender: '', address: '', part: '', mobile: '' };
+
+    let nameMatch = block.match(/(?:मतदाता\s*का\s*नाम|voter'?s?\s*name|elector'?s?\s*name)\s*[:ः]?\s*([^\n]+)/i);
+    if(!nameMatch) nameMatch = block.match(/(?:^|\n)\s*नाम\s*[:ः]\s*([^\n]+)/);
+    if(nameMatch) rec.name = nameMatch[1].trim().slice(0, 60);
+
+    let relMatch = block.match(/(?:पिता|पति|माता)[^:ः\n]{0,12}(?:का\s*नाम)?\s*[:ः]\s*([^\n]+)/)
+      || block.match(/(?:father'?s?|husband'?s?|mother'?s?)\s*name\s*[:ः]?\s*([^\n]+)/i);
+    if(relMatch) rec.relname = relMatch[1].trim().slice(0, 60);
+
+    let ageMatch = block.match(/(?:आयु|उम्र|age)\s*[:ः]?\s*(\d{1,3})/i);
+    if(ageMatch) rec.age = ageMatch[1];
+
+    let genderMatch = block.match(/(पुरुष|महिला|male|female|अन्य)/i);
+    if(genderMatch){
+      const g = genderMatch[1].toLowerCase();
+      if(g.includes('पुरुष') || g === 'male') rec.gender = 'पुरुष';
+      else if(g.includes('महिला') || g === 'female') rec.gender = 'महिला';
+      else rec.gender = 'अन्य';
+    }
+
+    let houseMatch = block.match(/(?:मकान\s*(?:सं|संख्या|नं)|house\s*no)\.?\s*[:ः]?\s*([^\n,]{1,40})/i);
+    if(houseMatch) rec.address = houseMatch[1].trim();
+
+    let partMatch = block.match(/(?:भाग\s*(?:सं|संख्या)|part\s*no)\.?\s*[:ः]?\s*(\d+)/i);
+    if(partMatch) rec.part = partMatch[1];
+
+    let mobileMatch = block.match(/\b([6-9]\d{9})\b/);
+    if(mobileMatch) rec.mobile = mobileMatch[1];
+
+    records.push(rec);
+  }
+  return records;
+}
+
+document.getElementById('scanCancelBtn').addEventListener('click', () => {
+  scanCancelled = true;
+  scanLog('⏹ यूज़र द्वारा रोका गया...');
+});
+
+document.getElementById('scanStartBtn').addEventListener('click', async () => {
+  const fileInput = document.getElementById('scanFiles');
+  const files = Array.from(fileInput.files || []);
+  if(files.length === 0){ showStatus('scanStatus', 'कृपया पहले फोटो या PDF फाइल चुनें।', false); return; }
+
+  scanCancelled = false;
+  document.getElementById('scanStartBtn').disabled = true;
+  document.getElementById('scanCancelBtn').style.display = 'inline-block';
+  document.getElementById('scanLog').innerHTML = '';
+  setScanProgress(0, 'शुरू हो रहा है...');
+  scanLog('OCR इंजन लोड हो रहा है (पहली बार थोड़ा समय लग सकता है)...');
+
+  try{
+    // Build full list of page-images across all uploaded files
+    let allImages = [];
+    for(const file of files){
+      if(scanCancelled) break;
+      if(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')){
+        scanLog(`📄 ${file.name} — PDF पेज निकाले जा रहे हैं...`);
+        const imgs = await pdfToImages(file);
+        imgs.forEach(c => allImages.push({ name: file.name, canvas: c }));
+        scanLog(`   → ${imgs.length} पेज मिले`);
+      }else{
+        const bitmap = await createImageBitmap(file);
+        const canvas = document.createElement('canvas');
+        canvas.width = bitmap.width; canvas.height = bitmap.height;
+        canvas.getContext('2d').drawImage(bitmap, 0, 0);
+        allImages.push({ name: file.name, canvas });
+      }
+    }
+
+    if(allImages.length === 0){
+      showStatus('scanStatus', 'कोई पेज/फोटो प्रोसेस के लिए नहीं मिली।', false);
+      throw new Error('no-images');
+    }
+
+    scanLog(`कुल ${allImages.length} पेज/फोटो प्रोसेस होंगी।`);
+    const worker = await Tesseract.createWorker('eng+hin', 1, {
+      logger: m => {
+        if(m.status === 'recognizing text'){
+          // handled per-page below via outer progress
+        }
+      }
+    });
+
+    let allRecords = [];
+    for(let i = 0; i < allImages.length; i++){
+      if(scanCancelled) break;
+      const { name, canvas } = allImages[i];
+      const pct = Math.round(((i) / allImages.length) * 100);
+      setScanProgress(pct, `पेज ${i + 1} / ${allImages.length} पढ़ा जा रहा है (${name})...`);
+      const { data } = await worker.recognize(canvas);
+      const pageRecords = parseOcrTextToRecords(data.text || '');
+      allRecords = allRecords.concat(pageRecords);
+      scanLog(`   पेज ${i + 1}: ${pageRecords.length} संभावित मतदाता मिले`);
+    }
+
+    await worker.terminate();
+
+    if(scanCancelled){
+      showStatus('scanStatus', 'प्रक्रिया रोक दी गई। अब तक स्कैन किया गया डेटा नहीं जोड़ा गया।', false);
+    }else{
+      setScanProgress(100, 'पूरा हुआ — सूची में जोड़ा जा रहा है...');
+
+      const existingEpics = new Set(voters.filter(v => v.epic).map(v => v.epic.toUpperCase()));
+      let duplicates = 0;
+      const toAdd = [];
+
+      allRecords.forEach(rec => {
+        if(!rec.epic){ return; }
+        if(existingEpics.has(rec.epic)){ duplicates++; return; }
+        existingEpics.add(rec.epic);
+        toAdd.push({
+          id: uid(),
+          name: rec.name || '',
+          relname: rec.relname || '',
+          age: rec.age || '',
+          gender: rec.gender || '',
+          epic: rec.epic || '',
+          mobile: rec.mobile || '',
+          part: rec.part || '',
+          address: rec.address || '',
+          voted: false
+        });
+      });
+
+      await batchUpsertVoters(toAdd);
+      scanLog(`✅ पूरा हुआ — ${toAdd.length} नए मतदाता जोड़े गए, ${duplicates} डुप्लीकेट (पहले से मौजूद EPIC) छोड़े गए।`);
+      showStatus('scanStatus', `${toAdd.length} मतदाता जोड़े गए, ${duplicates} डुप्लीकेट छोड़े गए। "सूची व खोज" टैब में जाकर जांच लें।`, true);
+    }
+  }catch(err){
+    if(err.message !== 'no-images'){
+      console.error(err);
+      scanLog('❌ त्रुटि: ' + err.message);
+      showStatus('scanStatus', 'प्रोसेसिंग में समस्या आई। इंटरनेट कनेक्शन जांचें और दोबारा कोशिश करें।', false);
+    }
+  }finally{
+    document.getElementById('scanStartBtn').disabled = false;
+    document.getElementById('scanCancelBtn').style.display = 'none';
+  }
+});
+
+// App starts once auth state is known (see onAuthStateChanged above)
+</script>
+
+</body>
+</html>
